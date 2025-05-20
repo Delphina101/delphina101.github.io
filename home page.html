@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Imtrotech - Web Development & Social Media Marketing</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#1e40af',secondary:'#60a5fa',accent:'#FF6B6B'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'Inter', sans-serif;
+}
+.gradient-text {
+background: linear-gradient(90deg, #1e40af 0%, #60a5fa 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+.gradient-bg {
+background: linear-gradient(135deg, #1e40af 0%, #60a5fa 100%);
+}
+.gradient-bg-light {
+background: linear-gradient(135deg, rgba(30, 64, 175, 0.05) 0%, rgba(96, 165, 250, 0.1) 100%);
+}
+.service-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 25px -5px rgba(30, 64, 175, 0.1);
+}
+.testimonial-card {
+box-shadow: 0 4px 20px rgba(30, 64, 175, 0.1);
+}
+input:focus, textarea:focus {
+outline: none;
+border-color: #60a5fa;
+}
+.portfolio-item:hover .portfolio-overlay {
+opacity: 1;
+}
+.portfolio-overlay {
+background: linear-gradient(to top, rgba(30, 64, 175, 0.9), rgba(96, 165, 250, 0.7));
+opacity: 0;
+transition: opacity 0.3s ease;
+}
+.counter-value {
+transition: all 0.5s ease;
+}
+.sticky-header {
+position: fixed;
+top: 0;
+width: 100%;
+z-index: 50;
+transition: all 0.3s ease;
+}
+.sticky-header.scrolled {
+box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+.nav-link {
+position: relative;
+}
+.nav-link::after {
+content: '';
+position: absolute;
+width: 0;
+height: 2px;
+bottom: -4px;
+left: 0;
+background: linear-gradient(90deg, #1e40af 0%, #60a5fa 100%);
+transition: width 0.3s ease;
+}
+.nav-link:hover::after {
+width: 100%;
+}
+.custom-checkbox {
+appearance: none;
+-webkit-appearance: none;
+width: 20px;
+height: 20px;
+border: 2px solid #60a5fa;
+border-radius: 4px;
+cursor: pointer;
+position: relative;
+}
+.custom-checkbox:checked {
+background-color: #1e40af;
+border-color: #1e40af;
+}
+.custom-checkbox:checked::after {
+content: '';
+position: absolute;
+width: 5px;
+height: 10px;
+border: solid white;
+border-width: 0 2px 2px 0;
+top: 2px;
+left: 6px;
+transform: rotate(45deg);
+}
+</style>
+</head>
+<body class="bg-white">
+<!-- Header -->
+<header class="sticky-header bg-white border-b border-gray-100">
+<div class="container mx-auto px-6 py-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<a href="#" class="text-2xl font-['Pacifico'] text-primary">Imtrotech</a>
+</div>
+<nav class="hidden md:flex items-center space-x-8">
+<a href="#" class="nav-link text-gray-800 font-medium hover:text-primary transition-colors">Home</a>
+<a href="#services" class="nav-link text-gray-800 font-medium hover:text-primary transition-colors">Services</a>
+<a href="#portfolio" class="nav-link text-gray-800 font-medium hover:text-primary transition-colors">Portfolio</a>
+<a href="#about" class="nav-link text-gray-800 font-medium hover:text-primary transition-colors">About</a>
+<a href="#contact" class="nav-link text-gray-800 font-medium hover:text-primary transition-colors">Contact</a>
+</nav>
+<button class="hidden md:block gradient-bg text-white px-6 py-2.5 !rounded-button font-medium whitespace-nowrap hover:opacity-90 transition-opacity">Get Started</button>
+<div class="md:hidden w-10 h-10 flex items-center justify-center">
+<i class="ri-menu-line ri-xl text-gray-800"></i>
+</div>
+</div>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="relative w-full overflow-hidden min-h-screen flex items-center" style="background-image: url('https://readdy.ai/api/search-image?query=vibrant%2520and%2520colorful%2520digital%2520marketing%2520and%2520web%2520development%2520abstract%2520concept%2520with%2520dynamic%25203D%2520geometric%2520shapes%252C%2520floating%2520elements%252C%2520modern%2520design%252C%2520with%2520empty%2520space%2520on%2520the%2520left%2520side%2520for%2520text%252C%2520professional%2520high-quality%2520illustration%252C%2520no%2520text%2520or%2520people&width=1600&height=800&seq=hero2&orientation=landscape'); background-size: cover; background-position: center;">
+<canvas id="heroCanvas" class="absolute inset-0 z-0"></canvas>
+<div class="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-transparent"></div>
+<div class="container mx-auto px-6 py-24 md:py-32 relative">
+<div class="w-full md:w-1/2">
+<h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">Transform Your Digital Presence</h1>
+<p class="text-lg md:text-xl text-gray-700 mb-8">We create stunning websites and powerful social media strategies that help your business stand out in today's competitive digital landscape.</p>
+<div class="flex flex-col sm:flex-row gap-4">
+<a href="#services" class="gradient-bg text-white px-8 py-3.5 !rounded-button font-medium text-center whitespace-nowrap hover:opacity-90 transition-opacity">Our Services</a>
+<a href="#contact" class="bg-white text-primary border-2 border-primary px-8 py-3.5 !rounded-button font-medium text-center whitespace-nowrap hover:bg-blue-50 transition-colors">Free Consultation</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Team Section -->
+<section id="team" class="py-20 bg-gray-50">
+<div class="container mx-auto px-6">
+<div class="text-center mb-16">
+<h2 class="text-3xl md:text-4xl font-bold mb-4">Meet Our Leadership Team</h2>
+<p class="text-gray-600 max-w-2xl mx-auto">Get to know the talented individuals who drive innovation and excellence at Imtrotech.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+<!-- CEO -->
+<div class="team-card relative group">
+<div class="relative overflow-hidden rounded-lg">
+<img src="https://readdy.ai/api/search-image?query=professional%2520headshot%2520of%2520male%2520CEO%252C%2520confident%2520pose%252C%2520modern%2520business%2520attire%252C%2520neutral%2520background%252C%2520warm%2520lighting%252C%2520high-quality%2520portrait&width=400&height=500&seq=ceo&orientation=portrait" alt="CEO" class="w-full h-[400px] object-cover transform group-hover:scale-110 transition-transform duration-500">
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+<div class="text-white">
+<p class="text-sm mb-2">With over 15 years of experience in digital transformation, David leads our team with a vision for innovation and excellence.</p>
+<div class="flex space-x-3 mt-3">
+<a href="#" class="hover:text-blue-400"><i class="ri-linkedin-fill ri-lg"></i></a>
+<a href="#" class="hover:text-blue-400"><i class="ri-twitter-fill ri-lg"></i></a>
+</div>
+</div>
+</div>
+</div>
+<div class="text-center mt-4">
+<h3 class="text-xl font-semibold">David Anderson</h3>
+<p class="text-primary">Chief Executive Officer</p>
+</div>
+</div>
+<!-- CTO -->
+<div class="team-card relative group">
+<div class="relative overflow-hidden rounded-lg">
+<img src="https://readdy.ai/api/search-image?query=professional%2520headshot%2520of%2520female%2520CTO%252C%2520tech%2520leader%252C%2520confident%2520pose%252C%2520modern%2520business%2520casual%252C%2520neutral%2520background%252C%2520high-quality%2520portrait&width=400&height=500&seq=cto&orientation=portrait" alt="CTO" class="w-full h-[400px] object-cover transform group-hover:scale-110 transition-transform duration-500">
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+<div class="text-white">
+<p class="text-sm mb-2">Sarah brings cutting-edge technical expertise and leads our development team in creating innovative solutions.</p>
+<div class="flex space-x-3 mt-3">
+<a href="#" class="hover:text-blue-400"><i class="ri-linkedin-fill ri-lg"></i></a>
+<a href="#" class="hover:text-blue-400"><i class="ri-github-fill ri-lg"></i></a>
+</div>
+</div>
+</div>
+</div>
+<div class="text-center mt-4">
+<h3 class="text-xl font-semibold">Sarah Chen</h3>
+<p class="text-primary">Chief Technology Officer</p>
+</div>
+</div>
+<!-- CMO -->
+<div class="team-card relative group">
+<div class="relative overflow-hidden rounded-lg">
+<img src="https://readdy.ai/api/search-image?query=professional%2520headshot%2520of%2520male%2520CMO%252C%2520marketing%2520executive%252C%2520creative%2520professional%252C%2520modern%2520business%2520casual%252C%2520neutral%2520background%252C%2520high-quality%2520portrait&width=400&height=500&seq=cmo&orientation=portrait" alt="CMO" class="w-full h-[400px] object-cover transform group-hover:scale-110 transition-transform duration-500">
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+<div class="text-white">
+<p class="text-sm mb-2">Marcus drives our marketing strategies and ensures our clients achieve maximum digital impact.</p>
+<div class="flex space-x-3 mt-3">
+<a href="#" class="hover:text-blue-400"><i class="ri-linkedin-fill ri-lg"></i></a>
+<a href="#" class="hover:text-blue-400"><i class="ri-instagram-fill ri-lg"></i></a>
+</div>
+</div>
+</div>
+</div>
+<div class="text-center mt-4">
+<h3 class="text-xl font-semibold">Marcus Johnson</h3>
+<p class="text-primary">Chief Marketing Officer</p>
+</div>
+</div>
+</div>
+<div class="text-center">
+<a href="#" class="inline-block gradient-bg text-white px-8 py-3.5 !rounded-button font-medium hover:opacity-90 transition-opacity">Meet Our Full Team</a>
+</div>
+</div>
+</section>
+<!-- Services Section -->
+<section id="services" class="py-20 bg-white">
+<div class="container mx-auto px-6">
+<div class="text-center mb-16">
+<h2 class="text-3xl md:text-4xl font-bold mb-4">Our Expert Services</h2>
+<p class="text-gray-600 max-w-2xl mx-auto">We offer comprehensive digital solutions tailored to meet your business needs and help you achieve your goals.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+<!-- Service 1 -->
+<div class="service-card bg-white p-8 rounded-lg border border-gray-100 shadow-sm transition-all duration-300">
+    <div class="w-16 h-16 flex items-center justify-center mb-6 gradient-bg-light rounded-full">
+    <i class="ri-search-line ri-xl text-primary"></i>
+    </div>
+    <h3 class="text-xl font-semibold mb-3">Web Development</h3>
+    <p class="text-gray-600 mb-4">Custom websites designed to convert visitors into customers with responsive layout and intuitive experiences</p>
+    <a href="#" class="inline-flex items-center text-primary font-medium">
+    Learn More
+    <i class="ri-arrow-right-line ri-sm ml-1"></i>
+    </a>
+    </div>
+
+<!-- Service 2 -->
+<div class="service-card bg-white p-8 rounded-lg border border-gray-100 shadow-sm transition-all duration-300">
+<div class="w-16 h-16 flex items-center justify-center mb-6 gradient-bg-light rounded-full">
+<i class="ri-search-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-semibold mb-3">Data Analytics</h3>
+<p class="text-gray-600 mb-4">Leverage data-driven insights to make informed decisions and optimize your buisness strategies</p>
+<a href="#" class="inline-flex items-center text-primary font-medium">
+Learn More
+<i class="ri-arrow-right-line ri-sm ml-1"></i>
+</a>
+</div>
+<div class="service-card bg-white p-8 rounded-lg border border-gray-100 shadow-sm transition-all duration-300">
+<div class="w-16 h-16 flex items-center justify-center mb-6 gradient-bg-light rounded-full">
+<i class="ri-instagram-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-semibold mb-3">Social Media Marketing</h3>
+<p class="text-gray-600 mb-4">Strategic social media campaigns that build brand awareness, engage your audience, and drive measurable results.</p>
+<a href="#" class="inline-flex items-center text-primary font-medium">
+Learn More
+<i class="ri-arrow-right-line ri-sm ml-1"></i>
+</a>
+</div>
+<!-- Service 3 -->
+<div class="service-card bg-white p-8 rounded-lg border border-gray-100 shadow-sm transition-all duration-300">
+<div class="w-16 h-16 flex items-center justify-center mb-6 gradient-bg-light rounded-full">
+<i class="ri-search-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-semibold mb-3">SEO Optimization</h3>
+<p class="text-gray-600 mb-4">Data-driven SEO strategies that improve your search rankings and increase organic traffic to your website.</p>
+<a href="#" class="inline-flex items-center text-primary font-medium">
+Learn More
+<i class="ri-arrow-right-line ri-sm ml-1"></i>
+</a>
+</div>
+<!-- Service 4 -->
+<div class="service-card bg-white p-8 rounded-lg border border-gray-100 shadow-sm transition-all duration-300">
+<div class="w-16 h-16 flex items-center justify-center mb-6 gradient-bg-light rounded-full">
+<i class="ri-file-text-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-semibold mb-3">Content Creation</h3>
+<p class="text-gray-600 mb-4">Compelling content that tells your brand story, educates your audience, and drives engagement across platforms.</p>
+<a href="#" class="inline-flex items-center text-primary font-medium">
+Learn More
+<i class="ri-arrow-right-line ri-sm ml-1"></i>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Portfolio Section -->
+<section id="portfolio" class="py-20 bg-gray-50">
+<div class="container mx-auto px-6">
+<div class="text-center mb-16">
+<h2 class="text-3xl md:text-4xl font-bold mb-4">Our Recent Projects</h2>
+<p class="text-gray-600 max-w-2xl mx-auto">Explore our portfolio of successful projects that have helped businesses achieve their digital goals.</p>
+</div>
+<div class="flex justify-center mb-10">
+<div class="inline-flex bg-white p-1 rounded-full shadow-sm">
+<button class="px-6 py-2 rounded-full bg-primary text-white whitespace-nowrap">All Projects</button>
+<button class="px-6 py-2 rounded-full text-gray-700 hover:bg-gray-100 whitespace-nowrap">Web Design</button>
+<button class="px-6 py-2 rounded-full text-gray-700 hover:bg-gray-100 whitespace-nowrap">Social Media</button>
+<button class="px-6 py-2 rounded-full text-gray-700 hover:bg-gray-100 whitespace-nowrap">E-Commerce</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Portfolio Item 1 -->
+<div class="portfolio-item relative rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=modern%2520e-commerce%2520website%2520design%2520with%2520clean%2520layout%252C%2520product%2520showcase%252C%2520professional%2520high-quality%2520screenshot%2520on%2520laptop%2520display%252C%2520blue%2520color%2520scheme%252C%2520no%2520text%2520or%2520people&width=600&height=450&seq=port1&orientation=landscape" alt="E-commerce Website" class="w-full h-64 object-cover object-top">
+<div class="portfolio-overlay absolute inset-0 flex flex-col justify-end p-6">
+<span class="text-white bg-primary/80 px-3 py-1 rounded-full text-sm inline-block mb-2">E-Commerce</span>
+<h3 class="text-white text-xl font-semibold mb-2">LuxeMarket Online Store</h3>
+<button class="bg-white text-primary px-4 py-2 !rounded-button font-medium mt-2 whitespace-nowrap hover:bg-blue-50 transition-colors">View Project</button>
+</div>
+</div>
+<!-- Portfolio Item 2 -->
+<div class="portfolio-item relative rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=social%2520media%2520marketing%2520campaign%2520dashboard%2520with%2520analytics%252C%2520graphs%252C%2520engagement%2520metrics%252C%2520professional%2520high-quality%2520screenshot%252C%2520blue%2520and%2520white%2520color%2520scheme%252C%2520no%2520text%2520or%2520people&width=600&height=450&seq=port2&orientation=landscape" alt="Social Media Campaign" class="w-full h-64 object-cover object-top">
+<div class="portfolio-overlay absolute inset-0 flex flex-col justify-end p-6">
+<span class="text-white bg-primary/80 px-3 py-1 rounded-full text-sm inline-block mb-2">Social Media</span>
+<h3 class="text-white text-xl font-semibold mb-2">GreenEarth Campaign</h3>
+<button class="bg-white text-primary px-4 py-2 !rounded-button font-medium mt-2 whitespace-nowrap hover:bg-blue-50 transition-colors">View Project</button>
+</div>
+</div>
+<!-- Portfolio Item 3 -->
+<div class="portfolio-item relative rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=corporate%2520website%2520design%2520for%2520financial%2520services%252C%2520professional%2520layout%252C%2520blue%2520and%2520white%2520color%2520scheme%252C%2520clean%2520design%252C%2520high-quality%2520screenshot%2520on%2520desktop%2520display%252C%2520no%2520text%2520or%2520people&width=600&height=450&seq=port3&orientation=landscape" alt="Corporate Website" class="w-full h-64 object-cover object-top">
+<div class="portfolio-overlay absolute inset-0 flex flex-col justify-end p-6">
+<span class="text-white bg-primary/80 px-3 py-1 rounded-full text-sm inline-block mb-2">Web Design</span>
+<h3 class="text-white text-xl font-semibold mb-2">FinTrust Corporate Site</h3>
+<button class="bg-white text-primary px-4 py-2 !rounded-button font-medium mt-2 whitespace-nowrap hover:bg-blue-50 transition-colors">View Project</button>
+</div>
+</div>
+<!-- Portfolio Item 4 -->
+<div class="portfolio-item relative rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=mobile%2520app%2520design%2520for%2520fitness%2520tracking%252C%2520clean%2520UI%252C%2520blue%2520color%2520scheme%252C%2520multiple%2520screens%2520shown%2520on%2520smartphone%2520displays%252C%2520professional%2520high-quality%2520mockup%252C%2520no%2520text%2520or%2520people&width=600&height=450&seq=port4&orientation=landscape" alt="Mobile App" class="w-full h-64 object-cover object-top">
+<div class="portfolio-overlay absolute inset-0 flex flex-col justify-end p-6">
+<span class="text-white bg-primary/80 px-3 py-1 rounded-full text-sm inline-block mb-2">Mobile App</span>
+<h3 class="text-white text-xl font-semibold mb-2">FitTrack Mobile App</h3>
+<button class="bg-white text-primary px-4 py-2 !rounded-button font-medium mt-2 whitespace-nowrap hover:bg-blue-50 transition-colors">View Project</button>
+</div>
+</div>
+<!-- Portfolio Item 5 -->
+<div class="portfolio-item relative rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=restaurant%2520website%2520design%2520with%2520menu%2520showcase%252C%2520elegant%2520layout%252C%2520food%2520photography%252C%2520blue%2520and%2520white%2520accents%252C%2520professional%2520high-quality%2520screenshot%2520on%2520laptop%2520display%252C%2520no%2520text%2520or%2520people&width=600&height=450&seq=port5&orientation=landscape" alt="Restaurant Website" class="w-full h-64 object-cover object-top">
+<div class="portfolio-overlay absolute inset-0 flex flex-col justify-end p-6">
+<span class="text-white bg-primary/80 px-3 py-1 rounded-full text-sm inline-block mb-2">Web Design</span>
+<h3 class="text-white text-xl font-semibold mb-2">Savory Bistro Website</h3>
+<button class="bg-white text-primary px-4 py-2 !rounded-button font-medium mt-2 whitespace-nowrap hover:bg-blue-50 transition-colors">View Project</button>
+</div>
+</div>
+<!-- Portfolio Item 6 -->
+<div class="portfolio-item relative rounded-lg overflow-hidden shadow-md">
+<img src="https://readdy.ai/api/search-image?query=social%2520media%2520content%2520creation%2520for%2520fashion%2520brand%252C%2520instagram%2520grid%2520layout%252C%2520cohesive%2520blue%2520and%2520white%2520aesthetic%252C%2520professional%2520high-quality%2520mockup%252C%2520no%2520text%2520or%2520people&width=600&height=450&seq=port6&orientation=landscape" alt="Social Media Content" class="w-full h-64 object-cover object-top">
+<div class="portfolio-overlay absolute inset-0 flex flex-col justify-end p-6">
+<span class="text-white bg-primary/80 px-3 py-1 rounded-full text-sm inline-block mb-2">Social Media</span>
+<h3 class="text-white text-xl font-semibold mb-2">StyleHub Content Strategy</h3>
+<button class="bg-white text-primary px-4 py-2 !rounded-button font-medium mt-2 whitespace-nowrap hover:bg-blue-50 transition-colors">View Project</button>
+</div>
+</div>
+</div>
+<div class="text-center mt-12">
+<a href="#" class="inline-block border-2 border-primary text-primary px-8 py-3 !rounded-button font-medium hover:bg-primary hover:text-white transition-colors whitespace-nowrap">View All Projects</a>
+</div>
+</div>
+</section>
+<!-- Why Choose Us Section -->
+<section id="about" class="py-20 bg-white">
+<div class="container mx-auto px-6">
+<div class="flex flex-col lg:flex-row gap-12 items-center">
+<div class="w-full lg:w-1/2">
+<h2 class="text-3xl md:text-4xl font-bold mb-6">Why Choose Imtrotech?</h2>
+<p class="text-gray-600 mb-8">We combine technical expertise with creative innovation to deliver digital solutions that drive real business results. Our team is passionate about helping businesses thrive in the digital world.</p>
+<div class="grid grid-cols-2 gap-6 mb-8">
+<div class="flex flex-col items-center p-6 bg-gray-50 rounded-lg">
+<span class="counter-value text-3xl font-bold text-primary mb-2">250+</span>
+<span class="text-gray-600 text-center">Projects Completed</span>
+</div>
+<div class="flex flex-col items-center p-6 bg-gray-50 rounded-lg">
+<span class="counter-value text-3xl font-bold text-primary mb-2">98%</span>
+<span class="text-gray-600 text-center">Client Satisfaction</span>
+</div>
+<div class="flex flex-col items-center p-6 bg-gray-50 rounded-lg">
+<span class="counter-value text-3xl font-bold text-primary mb-2">15+</span>
+<span class="text-gray-600 text-center">Years Experience</span>
+</div>
+<div class="flex flex-col items-center p-6 bg-gray-50 rounded-lg">
+<span class="counter-value text-3xl font-bold text-primary mb-2">50+</span>
+<span class="text-gray-600 text-center">Team Members</span>
+</div>
+</div>
+</div>
+<div class="w-full lg:w-1/2">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="p-6 bg-white rounded-lg shadow-sm border border-gray-100">
+<div class="w-12 h-12 flex items-center justify-center mb-4 gradient-bg rounded-full">
+<i class="ri-award-line ri-lg text-white"></i>
+</div>
+<h3 class="text-xl font-semibold mb-2">Expert Team</h3>
+<p class="text-gray-600">Our team of certified professionals brings years of industry experience to every project.</p>
+</div>
+<div class="p-6 bg-white rounded-lg shadow-sm border border-gray-100">
+<div class="w-12 h-12 flex items-center justify-center mb-4 gradient-bg rounded-full">
+<i class="ri-customer-service-2-line ri-lg text-white"></i>
+</div>
+<h3 class="text-xl font-semibold mb-2">Dedicated Support</h3>
+<p class="text-gray-600">We provide ongoing support and maintenance to ensure your digital assets perform optimally.</p>
+</div>
+<div class="p-6 bg-white rounded-lg shadow-sm border border-gray-100">
+<div class="w-12 h-12 flex items-center justify-center mb-4 gradient-bg rounded-full">
+<i class="ri-timer-line ri-lg text-white"></i>
+</div>
+<h3 class="text-xl font-semibold mb-2">On-Time Delivery</h3>
+<p class="text-gray-600">We respect deadlines and deliver projects on schedule without compromising quality.</p>
+</div>
+<div class="p-6 bg-white rounded-lg shadow-sm border border-gray-100">
+<div class="w-12 h-12 flex items-center justify-center mb-4 gradient-bg rounded-full">
+<i class="ri-line-chart-line ri-lg text-white"></i>
+</div>
+<h3 class="text-xl font-semibold mb-2">Results-Driven</h3>
+<p class="text-gray-600">We focus on creating solutions that deliver measurable business results and ROI.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials Section -->
+<section class="py-20 gradient-bg">
+<div class="container mx-auto px-6">
+<div class="text-center mb-16">
+<h2 class="text-3xl md:text-4xl font-bold text-white mb-4">What Our Clients Say</h2>
+<p class="text-blue-100 max-w-2xl mx-auto">Hear from businesses that have transformed their digital presence with our services.</p>
+</div>
+<div class="relative testimonial-slider">
+<div class="flex overflow-hidden">
+<div class="min-w-full px-4">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Testimonial 1 -->
+<div class="testimonial-card bg-white p-8 rounded-lg">
+<div class="flex text-yellow-400 mb-4">
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+</div>
+<p class="text-gray-700 mb-6">"Imtrotech completely transformed our online presence. Their web development team created a stunning website that perfectly represents our brand, and their social media strategy has significantly increased our engagement and conversions."</p>
+<div class="flex items-center">
+<div class="w-12 h-12 rounded-full bg-gray-200 overflow-hidden mr-4">
+<img src="https://readdy.ai/api/search-image?query=professional%2520business%2520headshot%2520of%2520female%2520executive%252C%2520neutral%2520background%252C%2520confident%2520expression%252C%2520high-quality%2520portrait%252C%2520corporate%2520attire&width=100&height=100&seq=test1&orientation=squarish" alt="Client" class="w-full h-full object-cover">
+</div>
+<div>
+<h4 class="font-semibold">Rebecca Thompson</h4>
+<p class="text-gray-600 text-sm">Marketing Director, NovaTech Solutions</p>
+</div>
+</div>
+</div>
+<!-- Testimonial 2 -->
+<div class="testimonial-card bg-white p-8 rounded-lg">
+<div class="flex text-yellow-400 mb-4">
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+</div>
+<p class="text-gray-700 mb-6">"Working with Imtrotech has been a game-changer for our e-commerce business. Their SEO strategies have significantly improved our search rankings, and we've seen a 200% increase in organic traffic within just three months."</p>
+<div class="flex items-center">
+<div class="w-12 h-12 rounded-full bg-gray-200 overflow-hidden mr-4">
+<img src="https://readdy.ai/api/search-image?query=professional%2520business%2520headshot%2520of%2520male%2520entrepreneur%252C%2520neutral%2520background%252C%2520friendly%2520smile%252C%2520high-quality%2520portrait%252C%2520business%2520casual%2520attire&width=100&height=100&seq=test2&orientation=squarish" alt="Client" class="w-full h-full object-cover">
+</div>
+<div>
+<h4 class="font-semibold">Michael Rodriguez</h4>
+<p class="text-gray-600 text-sm">CEO, Urban Outfitters Co.</p>
+</div>
+</div>
+</div>
+<!-- Testimonial 3 -->
+<div class="testimonial-card bg-white p-8 rounded-lg">
+<div class="flex text-yellow-400 mb-4">
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+</div>
+<p class="text-gray-700 mb-6">"The social media campaign Imtrotech designed for our product launch exceeded all expectations. Their creative approach and strategic execution helped us reach our target audience effectively and generated impressive ROI."</p><div class="flex items-center">
+<div class="w-12 h-12 rounded-full bg-gray-200 overflow-hidden mr-4">
+<img src="https://readdy.ai/api/search-image?query=professional%2520business%2520headshot%2520of%2520female%2520business%2520owner%252C%2520neutral%2520background%252C%2520professional%2520appearance%252C%2520high-quality%2520portrait%252C%2520business%2520attire&width=100&height=100&seq=test3&orientation=squarish" alt="Client" class="w-full h-full object-cover">
+</div>
+<div>
+<h4 class="font-semibold">Jennifer Wilson</h4>
+<p class="text-gray-600 text-sm">Product Manager, EcoLife Brands</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-10">
+<div class="flex space-x-2">
+<button class="w-3 h-3 rounded-full bg-white opacity-100"></button>
+<button class="w-3 h-3 rounded-full bg-white opacity-50"></button>
+<button class="w-3 h-3 rounded-full bg-white opacity-50"></button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact Section -->
+<section id="contact" class="py-20 bg-white">
+<div class="container mx-auto px-6">
+<div class="text-center mb-16">
+<h2 class="text-3xl md:text-4xl font-bold mb-4">Get In Touch</h2>
+<p class="text-gray-600 max-w-2xl mx-auto">Ready to transform your digital presence? Contact us today to discuss your project.</p>
+</div>
+<div class="flex flex-col lg:flex-row gap-12">
+<div class="w-full lg:w-1/2">
+<form class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label for="name" class="block text-gray-700 mb-2">Full Name</label>
+<input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 rounded focus:border-primary" placeholder="Your name">
+</div>
+<div>
+<label for="email" class="block text-gray-700 mb-2">Email Address</label>
+<input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded focus:border-primary" placeholder="your@email.com">
+</div>
+</div>
+<div>
+<label for="subject" class="block text-gray-700 mb-2">Subject</label>
+<input type="text" id="subject" class="w-full px-4 py-3 border border-gray-300 rounded focus:border-primary" placeholder="How can we help you?">
+</div>
+<div>
+<label for="message" class="block text-gray-700 mb-2">Message</label>
+<textarea id="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded focus:border-primary" placeholder="Tell us about your project..."></textarea>
+</div>
+<div class="flex items-center">
+<input type="checkbox" id="consent" class="custom-checkbox mr-3">
+<label for="consent" class="text-gray-600 text-sm">I agree to receive communications from Imtrotech.</label>
+</div>
+<button type="submit" class="gradient-bg text-white px-8 py-3.5 !rounded-button font-medium whitespace-nowrap hover:opacity-90 transition-opacity">Send Message</button>
+</form>
+</div>
+<div class="w-full lg:w-1/2">
+<div class="h-64 md:h-80 lg:h-96 mb-8 rounded-lg overflow-hidden" style="background-image: url('https://public.readdy.ai/gen_page/map_placeholder_1280x720.png'); background-size: cover; background-position: center;"></div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="p-6 bg-gray-50 rounded-lg">
+<div class="w-12 h-12 flex items-center justify-center mb-4 gradient-bg-light rounded-full">
+<i class="ri-map-pin-line ri-lg text-primary"></i>
+</div>
+<h3 class="font-semibold mb-2">Our Location</h3>
+<p class="text-gray-600">123 Tech Avenue, Suite 500, San Francisco, CA 94107</p>
+</div>
+<div class="p-6 bg-gray-50 rounded-lg">
+<div class="w-12 h-12 flex items-center justify-center mb-4 gradient-bg-light rounded-full">
+<i class="ri-mail-line ri-lg text-primary"></i>
+</div>
+<h3 class="font-semibold mb-2">Email Us</h3>
+<p class="text-gray-600">info@imtrotech.com</p>
+<p class="text-gray-600">support@imtrotech.com</p>
+</div>
+<div class="p-6 bg-gray-50 rounded-lg">
+<div class="w-12 h-12 flex items-center justify-center mb-4 gradient-bg-light rounded-full">
+<i class="ri-phone-line ri-lg text-primary"></i>
+</div>
+<h3 class="font-semibold mb-2">Call Us</h3>
+<p class="text-gray-600">+1 (415) 555-1234</p>
+<p class="text-gray-600">+1 (800) 555-5678</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-gray-900 text-white pt-16 pb-8">
+<div class="container mx-auto px-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+<div>
+<a href="#" class="text-2xl font-['Pacifico'] text-white mb-6 block">Imtrotech</a>
+<p class="text-gray-400 mb-6">We create digital experiences that help businesses grow and thrive in today's competitive landscape.</p>
+<div class="flex space-x-4">
+<a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-primary transition-colors">
+<i class="ri-facebook-fill ri-lg"></i>
+</a>
+<a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-primary transition-colors">
+<i class="ri-twitter-fill ri-lg"></i>
+</a>
+<a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-primary transition-colors">
+<i class="ri-instagram-fill ri-lg"></i>
+</a>
+<a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-primary transition-colors">
+<i class="ri-linkedin-fill ri-lg"></i>
+</a>
+</div>
+</div>
+<div>
+<h3 class="text-lg font-semibold mb-6">Quick Links</h3>
+<ul class="space-y-3">
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+<li><a href="#services" class="text-gray-400 hover:text-white transition-colors">Services</a></li>
+<li><a href="#portfolio" class="text-gray-400 hover:text-white transition-colors">Portfolio</a></li>
+<li><a href="#about" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+<li><a href="#contact" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-semibold mb-6">Our Services</h3>
+<ul class="space-y-3">
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">Web Development</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">Social Media Marketing</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">SEO Optimization</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">Content Creation</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">E-Commerce Solutions</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">Brand Strategy</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-semibold mb-6">Newsletter</h3>
+<p class="text-gray-400 mb-4">Subscribe to our newsletter for the latest updates and insights.</p>
+<form class="flex mb-4">
+<input type="email" placeholder="Your email address" class="w-full px-4 py-2 rounded-l border-none text-gray-800">
+<button type="submit" class="gradient-bg px-4 py-2 !rounded-r-button whitespace-nowrap hover:opacity-90 transition-opacity">Subscribe</button>
+</form>
+<div class="flex items-center space-x-4">
+<span class="text-gray-400">We accept:</span>
+<div class="flex space-x-2">
+<i class="ri-visa-fill ri-lg"></i>
+<i class="ri-mastercard-fill ri-lg"></i>
+<i class="ri-paypal-fill ri-lg"></i>
+</div>
+</div>
+</div>
+</div>
+<div class="border-t border-gray-800 pt-8">
+<div class="flex flex-col md:flex-row justify-between items-center">
+<p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 Imtrotech. All rights reserved.</p>
+<div class="flex space-x-6">
+<a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>
+<a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Terms of Service</a>
+<a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Cookie Policy</a>
+</div>
+</div>
+</div>
+</div>
+<a href="#" id="back-to-top" class="fixed bottom-6 right-6 w-12 h-12 flex items-center justify-center rounded-full gradient-bg shadow-lg opacity-0 invisible transition-all duration-300">
+<i class="ri-arrow-up-line ri-lg text-white"></i>
+</a>
+</footer>
+<script>
+// 3D Animation Setup
+let scene, camera, renderer, particles;
+function initThreeJS() {
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    renderer = new THREE.WebGLRenderer({
+        canvas: document.getElementById('heroCanvas'),
+        alpha: true
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    
+    // Create particles
+    const geometry = new THREE.BufferGeometry();
+    const vertices = [];
+    
+    for (let i = 0; i < 5000; i++) {
+        vertices.push(
+            Math.random() * 2000 - 1000,
+            Math.random() * 2000 - 1000,
+            Math.random() * 2000 - 1000
+        );
+    }
+    
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+    
+    const material = new THREE.PointsMaterial({
+        color: 0x60a5fa,
+        size: 2,
+        transparent: true,
+        opacity: 0.8
+    });
+    
+    particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+    
+    camera.position.z = 1000;
+}
+function animate() {
+    requestAnimationFrame(animate);
+    
+    particles.rotation.x += 0.0005;
+    particles.rotation.y += 0.0005;
+    
+    renderer.render(scene, camera);
+}
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+}
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Three.js
+    initThreeJS();
+    animate();
+    window.addEventListener('resize', onWindowResize);
+    // Initialize GSAP ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // Animate team cards
+    gsap.utils.toArray('.team-card').forEach((card, i) => {
+        gsap.from(card, {
+            y: 100,
+            opacity: 0,
+            duration: 1,
+            scrollTrigger: {
+                trigger: card,
+                start: 'top bottom-=100',
+                toggleActions: 'play none none reverse'
+            },
+            delay: i * 0.2
+        });
+    });
+// Sticky Header
+const header = document.querySelector('.sticky-header');
+window.addEventListener('scroll', function() {
+if (window.scrollY > 10) {
+header.classList.add('scrolled');
+} else {
+header.classList.remove('scrolled');
+}
+});
+// Back to Top Button
+const backToTopButton = document.getElementById('back-to-top');
+window.addEventListener('scroll', function() {
+if (window.scrollY > 300) {
+backToTopButton.classList.remove('opacity-0', 'invisible');
+backToTopButton.classList.add('opacity-100', 'visible');
+} else {
+backToTopButton.classList.add('opacity-0', 'invisible');
+backToTopButton.classList.remove('opacity-100', 'visible');
+}
+});
+backToTopButton.addEventListener('click', function(e) {
+e.preventDefault();
+window.scrollTo({
+top: 0,
+behavior: 'smooth'
+});
+});
+// Smooth Scroll for Navigation Links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+anchor.addEventListener('click', function (e) {
+e.preventDefault();
+const targetId = this.getAttribute('href');
+if (targetId === '#') return;
+const targetElement = document.querySelector(targetId);
+if (targetElement) {
+window.scrollTo({
+top: targetElement.offsetTop - 80,
+behavior: 'smooth'
+});
+}
+});
+});
+});
+document.addEventListener('DOMContentLoaded', function() {
+// Custom Checkbox Functionality
+const checkboxes = document.querySelectorAll('.custom-checkbox');
+checkboxes.forEach(checkbox => {
+checkbox.addEventListener('click', function() {
+this.checked = !this.checked;
+});
+});
+});
+</script>
+</body>
+</html>
